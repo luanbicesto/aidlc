@@ -39,37 +39,36 @@ Solutions Architect → Tech Lead → [DevOps | Security | QA Specialists] → S
 ```
 aidlc/
 ├── .kiro/
-│   ├── steering/          # Este documento — contexto always-on para o projeto
-│   ├── agents/            # JSONs declarativos dos agentes (portáveis)
-│   │   ├── solutions-architect.json
-│   │   ├── tech-lead.json
-│   │   ├── devops-specialist.json
-│   │   ├── security-specialist.json
-│   │   ├── qa-specialist.json
-│   │   └── senior-sde.json
-│   └── settings/
-│       └── cli.json       # Default agent para Kiro CLI
-├── agents/                # Prompts .md (source of truth das personas)
-│   ├── solutions-architect.md
-│   ├── tech-lead.md
-│   ├── devops-specialist.md
-│   ├── security-specialist.md
-│   ├── qa-specialist.md
-│   └── senior-sde.md
+│   ├── steering/          # DEV-ONLY: contexto always-on para maintainers
+│   │   └── project.md
+│   ├── agents/            # DIST: JSONs declarativos dos agentes (portáveis)
+│   │   └── *.json
+│   └── settings/          # DIST: configuração do Kiro
+│       └── cli.json
+├── agents/                # DIST: prompts .md (source of truth das personas)
+│   └── *.md
 ├── LICENSE
 └── README.md
 ```
 
+**DEV-ONLY** = usado por maintainers ao trabalhar no framework. Não vai para o projeto do consumidor.
+**DIST** = distribuível. O consumidor copia para o projeto dele.
+
 ## Modelo de Distribuição
 
-O consumidor copia o conteúdo de `aidlc/` para a raiz do seu projeto:
+O consumidor copia apenas as pastas DIST:
 
 ```bash
-cp -R aidlc/.kiro/ <seu-projeto>/.kiro/
-cp -R aidlc/agents/ <seu-projeto>/agents/
+cp -R aidlc/.kiro/agents/   <seu-projeto>/.kiro/agents/
+cp -R aidlc/.kiro/settings/ <seu-projeto>/.kiro/settings/
+cp -R aidlc/agents/         <seu-projeto>/agents/
 ```
 
 Os JSONs usam paths relativos (`file://agents/tech-lead.md`) resolvidos a partir da raiz do projeto. O `allowedPaths` e `resources` são genéricos — o consumidor pode customizar para o seu contexto.
+
+## Steering para Desenvolvimento
+
+O `.kiro/steering/project.md` é lido automaticamente pelo Kiro quando se abre uma sessão **dentro do repo**. Ele NÃO é distribuído. Para que funcione no workspace pai (ex: `aidlc-framework/`), mantemos uma cópia em `aidlc-framework/.kiro/steering/project.md`.
 
 ## Relação com aidlc-workflows
 
