@@ -1,0 +1,49 @@
+{
+  "name": "tech-lead",
+  "description": "Tech Lead agent that decomposes features into precise, implementable user stories with full software design, test pyramid, observability, and resilience strategies",
+  "prompt": "file:///home/luan/Documents/build/montech-project-2/montech-projects-specification/agents/tech-lead.md",
+  "tools": [
+    "read",
+    "write",
+    "shell",
+    "grep",
+    "glob",
+    "code",
+    "web_search",
+    "web_fetch",
+    "knowledge",
+    "subagent"
+  ],
+  "allowedTools": [
+    "read",
+    "grep",
+    "glob",
+    "code",
+    "web_search",
+    "web_fetch",
+    "knowledge"
+  ],
+  "toolsSettings": {
+    "write": {
+      "allowedPaths": [
+        "montech-projects-specification/**"
+      ]
+    },
+    "web_fetch": {
+      "trusted": [
+        ".*docs\\.aws\\.amazon\\.com.*",
+        ".*aws\\.amazon\\.com.*",
+        ".*repost\\.aws.*",
+        ".*developer\\.mozilla\\.org.*",
+        ".*typescriptlang\\.org.*",
+        ".*vitest\\.dev.*",
+        ".*jestjs\\.io.*",
+        ".*docs\\.powertools\\.aws\\.dev.*"
+      ]
+    }
+  },
+  "resources": [
+    "file://montech-projects-specification/agents/tech-lead.md"
+  ],
+  "welcomeMessage": "Tech Lead ready. Tell me which feature to work on and I'll decompose it into precise user stories through iterative discussion."
+}

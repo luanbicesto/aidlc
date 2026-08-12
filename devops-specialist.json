@@ -1,0 +1,45 @@
+{
+  "name": "devops-specialist",
+  "description": "DevOps Specialist agent that reviews user stories for production readiness: observability (logs, tracing, metrics, alarms, dashboards), resilience (timeouts, retries, circuit breakers, fallbacks), performance (SLOs, latency budgets, resource sizing), and operational security",
+  "prompt": "file:///home/luan/Documents/build/montech-project-2/montech-projects-specification/agents/devops-specialist.md",
+  "tools": [
+    "read",
+    "write",
+    "shell",
+    "grep",
+    "glob",
+    "code",
+    "web_search",
+    "web_fetch",
+    "knowledge"
+  ],
+  "allowedTools": [
+    "read",
+    "grep",
+    "glob",
+    "code",
+    "web_search",
+    "web_fetch",
+    "knowledge"
+  ],
+  "toolsSettings": {
+    "write": {
+      "allowedPaths": [
+        "montech-projects-specification/**"
+      ]
+    },
+    "web_fetch": {
+      "trusted": [
+        ".*docs\\.aws\\.amazon\\.com.*",
+        ".*aws\\.amazon\\.com.*",
+        ".*repost\\.aws.*",
+        ".*docs\\.powertools\\.aws\\.dev.*",
+        ".*opentelemetry\\.io.*"
+      ]
+    }
+  },
+  "resources": [
+    "file://montech-projects-specification/agents/devops-specialist.md"
+  ],
+  "welcomeMessage": "DevOps Specialist ready. Send me a user story to review and I'll analyze it for production readiness — observability, resilience, performance, and operational safety."
+}

@@ -1,0 +1,47 @@
+{
+  "name": "security-specialist",
+  "description": "Security Specialist agent that reviews user stories for application security: authentication/authorization, input validation, injection prevention, data protection (LGPD/PII), infrastructure hardening, business logic abuse, and frontend security",
+  "prompt": "file:///home/luan/Documents/build/montech-project-2/montech-projects-specification/agents/security-specialist.md",
+  "tools": [
+    "read",
+    "write",
+    "shell",
+    "grep",
+    "glob",
+    "code",
+    "web_search",
+    "web_fetch",
+    "knowledge"
+  ],
+  "allowedTools": [
+    "read",
+    "grep",
+    "glob",
+    "code",
+    "web_search",
+    "web_fetch",
+    "knowledge"
+  ],
+  "toolsSettings": {
+    "write": {
+      "allowedPaths": [
+        "montech-projects-specification/**"
+      ]
+    },
+    "web_fetch": {
+      "trusted": [
+        ".*docs\\.aws\\.amazon\\.com.*",
+        ".*aws\\.amazon\\.com.*",
+        ".*owasp\\.org.*",
+        ".*cheatsheetseries\\.owasp\\.org.*",
+        ".*cve\\.mitre\\.org.*",
+        ".*nvd\\.nist\\.gov.*",
+        ".*developer\\.mozilla\\.org.*"
+      ]
+    }
+  },
+  "resources": [
+    "file://montech-projects-specification/agents/security-specialist.md"
+  ],
+  "welcomeMessage": "Security Specialist ready. Send me a user story to review and I'll analyze it for security vulnerabilities — authentication, input validation, data protection, infrastructure hardening, and business logic abuse."
+}

@@ -1,0 +1,49 @@
+{
+  "name": "qa-specialist",
+  "description": "QA Specialist agent that reviews user stories for test completeness: test pyramid balance, acceptance criteria coverage, edge cases, boundary conditions, and functional correctness guarantees",
+  "prompt": "file:///home/luan/Documents/build/montech-project-2/montech-projects-specification/agents/qa-specialist.md",
+  "tools": [
+    "read",
+    "write",
+    "shell",
+    "grep",
+    "glob",
+    "code",
+    "web_search",
+    "web_fetch",
+    "knowledge"
+  ],
+  "allowedTools": [
+    "read",
+    "grep",
+    "glob",
+    "code",
+    "web_search",
+    "web_fetch",
+    "knowledge"
+  ],
+  "toolsSettings": {
+    "write": {
+      "allowedPaths": [
+        "montech-projects-specification/**"
+      ]
+    },
+    "web_fetch": {
+      "trusted": [
+        ".*docs\\.aws\\.amazon\\.com.*",
+        ".*aws\\.amazon\\.com.*",
+        ".*docs\\.pytest\\.org.*",
+        ".*vitest\\.dev.*",
+        ".*jestjs\\.io.*",
+        ".*testing-library\\.com.*",
+        ".*martinfowler\\.com.*",
+        ".*docs\\.powertools\\.aws\\.dev.*",
+        ".*developer\\.mozilla\\.org.*"
+      ]
+    }
+  },
+  "resources": [
+    "file://montech-projects-specification/agents/qa-specialist.md"
+  ],
+  "welcomeMessage": "QA Specialist ready. Send me a user story to review and I'll analyze the test strategy — pyramid balance, acceptance criteria coverage, edge cases, boundary conditions, and functional completeness guarantees."
+}
