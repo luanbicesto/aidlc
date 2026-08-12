@@ -4,102 +4,108 @@ inclusion: always
 
 # AI-DLC Framework — Steering Document
 
-## Visão
+## Language Convention
 
-Este projeto é uma implementação **open-source e distribuível** da metodologia AI-DLC (AI-Driven Development Life Cycle) — um pipeline estruturado de agentes de IA especializados que guiam o ciclo de vida completo de desenvolvimento de software, desde a concepção arquitetural até a entrega de código produtivo.
+**English is the standard language for all development artifacts in this project** — including code, prompts, documentation, commit messages, PR descriptions, issues, and this steering document. Use English consistently across all contributions.
 
-O objetivo é entregar um framework que qualquer desenvolvedor possa copiar para o seu projeto e imediatamente ter acesso a um pipeline completo de engenharia de software com agentes especializados, gates de aprovação humana, e qualidade enterprise.
+## Vision
 
-## Princípios Fundamentais
+This project is an **open-source, distributable** implementation of the AI-DLC (AI-Driven Development Life Cycle) methodology — a structured pipeline of specialized AI agents that guide the complete software development lifecycle, from architectural conception to production-ready code delivery.
 
-1. **Multi-harness** — O core é harness-neutral. A mesma metodologia roda em Kiro CLI, Kiro IDE, Claude Code, Codex CLI, Cursor, opencode, GitHub Copilot, ou qualquer outro harness capaz. Hoje começamos pelo Kiro.
-2. **Distribuível** — Um `cp -R` ou instalação simples leva o framework para qualquer projeto. Sem dependências de runtime pesadas, sem build steps obrigatórios para o consumidor.
-3. **Open-source** — Licença permissiva. Qualquer pessoa pode usar, adaptar, e contribuir.
-4. **Human-in-the-loop** — Cada transição significativa requer aprovação humana. Os agentes propõem, o humano decide.
-5. **Pipeline sequencial com especialistas** — Cada agente tem domínio claro. O fluxo respeita a cadeia: Solutions Architect → Tech Lead → [DevOps/Security/QA Specialists] → Senior SDE.
-6. **Portável** — Paths relativos, sem hardcoding de diretórios, nomes de projetos, ou configurações específicas.
+The goal is to deliver a framework that any developer can copy into their project and immediately have access to a complete software engineering pipeline with specialized agents, human approval gates, and enterprise quality.
 
-## Pipeline de Agentes
+## Core Principles
+
+1. **Multi-harness** — The core is harness-neutral. The same methodology runs on Kiro CLI, Kiro IDE, Claude Code, Codex CLI, Cursor, opencode, GitHub Copilot, or any other capable harness. We start with Kiro.
+2. **Distributable** — A simple `cp -R` or install command brings the framework into any project. No heavy runtime dependencies, no mandatory build steps for the consumer.
+3. **Open-source** — Permissive license. Anyone can use, adapt, and contribute.
+4. **Human-in-the-loop** — Every significant transition requires human approval. Agents propose, humans decide.
+5. **Sequential pipeline with specialists** — Each agent has a clear domain. The flow respects the chain: Solutions Architect → Tech Lead → [DevOps/Security/QA Specialists] → Senior SDE.
+6. **Portable** — Relative paths, no hardcoding of directories, project names, or environment-specific configurations.
+
+## Agent Pipeline
 
 ```
 Solutions Architect → Tech Lead → [DevOps | Security | QA Specialists] → Senior SDE
 ```
 
-| Agente | Responsabilidade |
-|--------|-----------------|
-| **Solutions Architect** | Design de solução AWS-native, diagramas Mermaid, Well-Architected review, breakdown em features |
-| **Tech Lead** | Decomposição de features em user stories implementáveis com design técnico completo |
-| **DevOps Specialist** | Review de user stories: observabilidade, resiliência, performance, operational safety |
-| **Security Specialist** | Review de user stories: autenticação, validação, proteção de dados, LGPD, hardening |
-| **QA Specialist** | Review de user stories: pirâmide de testes, edge cases, cobertura, boundary conditions |
-| **Senior SDE** | Implementação autônoma end-to-end: código, testes, infra, PR |
+| Agent | Responsibility |
+|-------|---------------|
+| **Solutions Architect** | AWS-native solution design, Mermaid diagrams, Well-Architected review, feature breakdown |
+| **Tech Lead** | Feature decomposition into implementable user stories with full technical design |
+| **DevOps Specialist** | User story review: observability, resilience, performance, operational safety |
+| **Security Specialist** | User story review: authentication, validation, data protection, LGPD, hardening |
+| **QA Specialist** | User story review: test pyramid, edge cases, coverage, boundary conditions |
+| **Senior SDE** | Autonomous end-to-end implementation: code, tests, infrastructure, PR |
 
-## Arquitetura do Repositório
+## Repository Architecture
 
 ```
 aidlc/
 ├── .kiro/
-│   ├── steering/          # DEV-ONLY: contexto always-on para maintainers
+│   ├── steering/          # DEV-ONLY: always-on context for maintainers
 │   │   └── project.md
-│   ├── agents/            # DIST: JSONs declarativos dos agentes (portáveis)
+│   ├── agents/            # DIST: portable JSON agent definitions
 │   │   └── *.json
-│   └── settings/          # DIST: configuração do Kiro
+│   └── settings/          # DIST: Kiro configuration
 │       └── cli.json
-├── agents/                # DIST: prompts .md (source of truth das personas)
+├── agents/                # DIST: agent prompt files (source of truth)
 │   └── *.md
 ├── LICENSE
 └── README.md
 ```
 
-**DEV-ONLY** = usado por maintainers ao trabalhar no framework. Não vai para o projeto do consumidor.
-**DIST** = distribuível. O consumidor copia para o projeto dele.
+**DEV-ONLY** = used by maintainers when working on the framework. Not shipped to consumers.
+**DIST** = distributable. The consumer copies this to their project.
 
-## Modelo de Distribuição
+## Distribution Model
 
-O consumidor copia apenas as pastas DIST:
+The consumer copies only the DIST directories:
 
 ```bash
-cp -R aidlc/.kiro/agents/   <seu-projeto>/.kiro/agents/
-cp -R aidlc/.kiro/settings/ <seu-projeto>/.kiro/settings/
-cp -R aidlc/agents/         <seu-projeto>/agents/
+cp -R aidlc/.kiro/agents/   <your-project>/.kiro/agents/
+cp -R aidlc/.kiro/settings/ <your-project>/.kiro/settings/
+cp -R aidlc/agents/         <your-project>/agents/
 ```
 
-Os JSONs usam paths relativos (`file://agents/tech-lead.md`) resolvidos a partir da raiz do projeto. O `allowedPaths` e `resources` são genéricos — o consumidor pode customizar para o seu contexto.
+JSONs use relative paths (`file://agents/tech-lead.md`) resolved from the project root. The `allowedPaths` and `resources` are generic — consumers can customize for their context.
 
-## Steering para Desenvolvimento
+## Steering for Development
 
-O `.kiro/steering/project.md` é lido automaticamente pelo Kiro quando se abre uma sessão **dentro do repo**. Ele NÃO é distribuído. Para que funcione no workspace pai (ex: `aidlc-framework/`), mantemos uma cópia em `aidlc-framework/.kiro/steering/project.md`.
+The `.kiro/steering/project.md` is automatically read by Kiro when opening a session **within the repo**. It is NOT distributed. For it to work in a parent workspace (e.g., `aidlc-framework/`), we maintain a copy at `aidlc-framework/.kiro/steering/project.md`.
 
-## Relação com aidlc-workflows
+## Relationship with aidlc-workflows
 
-O [awslabs/aidlc-workflows](https://github.com/awslabs/aidlc-workflows) é uma implementação completa e madura do AI-DLC com 14 agentes, 32 estágios, máquina de estados, e engine TypeScript. Usamos como **referência e inspiração** para:
+[awslabs/aidlc-workflows](https://github.com/awslabs/aidlc-workflows) is a complete and mature AI-DLC implementation with 14 agents, 32 stages, a state machine, and a TypeScript engine. We use it as **reference and inspiration** for:
 
-- Formato dos agent JSONs (schema, tools, hooks)
-- Padrões de distribuição multi-harness (manifest + dist)
-- Conceitos de knowledge, sensors, e memory layers
-- Modelo de escopo adaptativo
+- Agent JSON format (schema, tools, hooks)
+- Multi-harness distribution patterns (manifest + dist)
+- Knowledge, sensors, and memory layer concepts
+- Adaptive scope model
 
-Porém, nosso projeto é uma **implementação independente** com foco em:
-- Pipeline mais simples e direto (6 agentes vs 14)
-- Sem dependência de bun/runtime para o consumidor
-- Prompts standalone (cada .md é self-contained)
-- Foco inicial no fluxo Solutions Architect → Tech Lead → Specialists → SDE
+However, our project is an **independent implementation** focused on:
+- Simpler and more direct pipeline (6 agents vs 14)
+- No bun/runtime dependency for the consumer
+- Standalone prompts (each .md is self-contained)
+- Initial focus on the Solutions Architect → Tech Lead → Specialists → SDE flow
 
-## Próximos Passos (Roadmap)
+## Next Steps (Roadmap)
 
-1. ✅ Estrutura base com 6 agentes para Kiro CLI
-2. Adicionar agent conductor/orchestrator
-3. Adicionar suporte ao harness Claude Code
-4. Implementar knowledge base por agente
-5. Adicionar hooks de quality gate (sensors)
-6. Expandir para Cursor, Codex, opencode
-7. Documentação de contribuição
-8. CI/CD para validação de drift
+1. ✅ Base structure with 6 agents for Kiro CLI
+2. Install script/command (#4)
+3. Doctor command (#2)
+4. Agent conductor/orchestrator
+5. Claude Code harness support
+6. Per-agent knowledge base
+7. Quality gate hooks (sensors)
+8. Expand to Cursor, Codex, opencode
+9. Contributing documentation
+10. CI/CD for drift validation
 
-## Convenções de Desenvolvimento
+## Development Conventions
 
-- Prompts em português e inglês (prompts de agente em inglês por padronização com LLMs)
-- JSONs seguem o schema `agent-v1.json` do Kiro
-- Paths sempre relativos à raiz do projeto consumidor
-- Cada agente é auto-contido: JSON + MD = tudo que ele precisa
-- Não commitamos outputs de projeto (user stories, designs) — só o framework
+- **English** is the standard language for all artifacts (code, docs, prompts, commits, issues)
+- JSONs follow the Kiro [agent-v1 schema](https://raw.githubusercontent.com/aws/amazon-q-developer-cli/refs/heads/main/schemas/agent-v1.json)
+- Paths are always relative to the consumer project root
+- Each agent is self-contained: JSON + MD = everything it needs
+- Project outputs (user stories, designs) are never committed — only the framework itself

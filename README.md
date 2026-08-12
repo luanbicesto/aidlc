@@ -1,58 +1,59 @@
-# AI-DLC — Pipeline de Agentes para Desenvolvimento de Software
+# AI-DLC — Agent Pipeline for Software Development
 
-Uma implementação open-source e distribuível da metodologia **AI-DLC** (AI-Driven Development Life Cycle) — um pipeline estruturado de agentes de IA especializados que guiam o ciclo de vida completo de desenvolvimento de software.
+An open-source, distributable implementation of the **AI-DLC** (AI-Driven Development Life Cycle) methodology — a structured pipeline of specialized AI agents that guide the complete software development lifecycle.
 
-## O que é
+## What is it
 
-Um framework que você copia para o seu projeto e imediatamente tem acesso a 6 agentes especializados trabalhando em pipeline:
+A framework you copy into your project to immediately get access to 6 specialized agents working in pipeline:
 
 ```
 Solutions Architect → Tech Lead → [DevOps | Security | QA] → Senior SDE
 ```
 
-Cada agente tem um domínio claro e o fluxo respeita a cadeia de responsabilidades — desde o design da solução até a implementação autônoma de código.
+Each agent has a clear domain and the flow respects the chain of responsibilities — from solution design to autonomous code implementation.
 
-## Agentes
+## Agents
 
-| Agente | Role |
-|--------|------|
-| **Solutions Architect** | Design de solução, diagramas, Well-Architected review, breakdown em features |
-| **Tech Lead** | Decomposição de features em user stories implementáveis |
-| **DevOps Specialist** | Review: observabilidade, resiliência, performance |
-| **Security Specialist** | Review: autenticação, validação, proteção de dados, LGPD |
-| **QA Specialist** | Review: pirâmide de testes, edge cases, cobertura |
-| **Senior SDE** | Implementação autônoma: código, testes, infra, PR |
+| Agent | Role |
+|-------|------|
+| **Solutions Architect** | Solution design, diagrams, Well-Architected review, feature breakdown |
+| **Tech Lead** | Feature decomposition into implementable user stories |
+| **DevOps Specialist** | Review: observability, resilience, performance |
+| **Security Specialist** | Review: authentication, validation, data protection, LGPD |
+| **QA Specialist** | Review: test pyramid, edge cases, coverage |
+| **Senior SDE** | Autonomous implementation: code, tests, infrastructure, PR |
 
 ## Quick Start
 
-### Pré-requisitos
+### Prerequisites
 
-- [Kiro CLI](https://kiro.dev) ≥ 2.6 instalado e autenticado (`kiro login`)
+- [Kiro CLI](https://kiro.dev) ≥ 2.6 installed and authenticated (`kiro login`)
+- Recommended model: Claude Opus 4.6 or higher
 
-### Instale no seu projeto
+### Install into your project
 
 ```bash
-# Clone este repositório
+# Clone this repository
 git clone https://github.com/luanbicesto/aidlc.git
 
-# Copie para o seu projeto (apenas o que é distribuível)
-cp -R aidlc/.kiro/agents/   <seu-projeto>/.kiro/agents/
-cp -R aidlc/.kiro/settings/ <seu-projeto>/.kiro/settings/
-cp -R aidlc/agents/         <seu-projeto>/agents/
+# Copy only the distributable files to your project
+cp -R aidlc/.kiro/agents/   <your-project>/.kiro/agents/
+cp -R aidlc/.kiro/settings/ <your-project>/.kiro/settings/
+cp -R aidlc/agents/         <your-project>/agents/
 ```
 
 > [!NOTE]
-> Não copie `.kiro/steering/` — é dev-only para maintainers do framework.
+> Do not copy `.kiro/steering/` — it is dev-only for framework maintainers.
 
-### Use
+### Usage
 
 ```bash
-cd <seu-projeto>
+cd <your-project>
 
-# Abre com o Tech Lead (default agent)
+# Opens with Tech Lead (default agent)
 kiro chat
 
-# Ou escolha um agente específico
+# Or choose a specific agent
 kiro chat --agent solutions-architect
 kiro chat --agent senior-sde
 kiro chat --agent qa-specialist
@@ -60,12 +61,12 @@ kiro chat --agent devops-specialist
 kiro chat --agent security-specialist
 ```
 
-### Verifique a instalação
+### Verify installation
 
-Após copiar, confirme que a estrutura está completa:
+After copying, confirm the structure is complete:
 
 ```
-<seu-projeto>/
+<your-project>/
 ├── .kiro/
 │   ├── agents/
 │   │   ├── solutions-architect.json
@@ -87,92 +88,93 @@ Após copiar, confirme que a estrutura está completa:
 
 ## Multi-Harness (Roadmap)
 
-O framework é desenhado para ser harness-neutral. Hoje suporta:
+The framework is designed to be harness-neutral. Current support:
 
-| Harness | Status | Estrutura |
+| Harness | Status | Structure |
 |---------|--------|-----------|
-| **Kiro CLI** | ✅ Disponível | `.kiro/agents/` + `agents/` |
-| **Kiro IDE** | ✅ Disponível | Mesma estrutura do CLI |
-| **Claude Code** | 🔜 Planejado | `.claude/` + `CLAUDE.md` |
-| **Cursor** | 🔜 Planejado | `.cursor/rules/` |
-| **Codex CLI** | 🔜 Planejado | `.codex/` |
-| **opencode** | 🔜 Planejado | `.opencode/` |
-| **GitHub Copilot** | 🔜 Planejado | `.github/copilot-instructions.md` |
+| **Kiro CLI** | ✅ Available | `.kiro/agents/` + `agents/` |
+| **Kiro IDE** | ✅ Available | Same structure as CLI |
+| **Claude Code** | 🔜 Planned | `.claude/` + `CLAUDE.md` |
+| **Cursor** | 🔜 Planned | `.cursor/rules/` |
+| **Codex CLI** | 🔜 Planned | `.codex/` |
+| **opencode** | 🔜 Planned | `.opencode/` |
+| **GitHub Copilot** | 🔜 Planned | `.github/copilot-instructions.md` |
 
-## Princípios
+## Principles
 
-1. **Human-in-the-loop** — Cada transição requer aprovação humana
-2. **Distribuível** — Copie e funciona. Sem build steps para o consumidor
-3. **Portável** — Paths relativos, zero hardcoding
-4. **Self-contained** — Cada agente é JSON + MD, sem dependências externas
-5. **Open-source** — Licença permissiva (MIT-0)
+1. **Human-in-the-loop** — Every transition requires human approval
+2. **Distributable** — Copy and it works. No build steps for the consumer
+3. **Portable** — Relative paths, zero hardcoding
+4. **Self-contained** — Each agent is JSON + MD, no external dependencies
+5. **Open-source** — Permissive license (MIT-0)
 
-## Estrutura do Repositório
+## Repository Structure
 
 ```
 aidlc/
 ├── .kiro/
-│   ├── steering/              # DEV-ONLY: contexto para maintainers
+│   ├── steering/              # DEV-ONLY: context for maintainers
 │   │   └── project.md
-│   ├── agents/                # DIST: definições JSON dos agentes
+│   ├── agents/                # DIST: JSON agent definitions
 │   │   └── *.json
-│   └── settings/              # DIST: configuração do Kiro
+│   └── settings/              # DIST: Kiro configuration
 │       └── cli.json
-├── agents/                    # DIST: prompts completos das personas
+├── agents/                    # DIST: full agent prompts
 │   └── *.md
 ├── LICENSE
 └── README.md
 ```
 
-- **DIST** = distribuível, o consumidor copia para o projeto dele
-- **DEV-ONLY** = usado apenas por quem desenvolve o framework
+- **DIST** = distributable, the consumer copies to their project
+- **DEV-ONLY** = used only by framework developers
 
 ## Contributing
 
-### Setup do ambiente de desenvolvimento
+### Development environment setup
 
 ```bash
 git clone git@github.com:luanbicesto/aidlc.git
 cd aidlc
-kiro chat   # o steering document carrega automaticamente o contexto do projeto
+kiro chat   # steering document automatically loads project context
 ```
 
-O `.kiro/steering/project.md` define a visão, princípios e arquitetura — ele é injetado automaticamente em toda sessão do Kiro quando você trabalha neste repositório.
+The `.kiro/steering/project.md` defines the vision, principles, and architecture — it is automatically injected into every Kiro session when working in this repository.
 
 ### Workflow
 
-1. Crie uma branch a partir de `main`
-2. Faça suas alterações
-3. Abra um PR para review
-4. Use GitHub Issues para propor ideias ou reportar bugs
+1. Create a branch from `main`
+2. Make your changes
+3. Open a PR for review
+4. Use GitHub Issues to propose ideas or report bugs
 
-### O que contribuir
+### What to contribute
 
-- **Novos harnesses** — adaptar os agents para Claude Code, Cursor, Codex, etc.
-- **Melhorias nos prompts** — refinar as instruções dos agentes em `agents/*.md`
-- **Knowledge base** — adicionar documentos de referência por agente
-- **Hooks e sensors** — quality gates e validações automáticas
-- **Doctor command** — validação de instalação (#2)
-- **Documentação** — exemplos, guias, troubleshooting
+- **New harnesses** — adapt agents for Claude Code, Cursor, Codex, etc.
+- **Prompt improvements** — refine agent instructions in `agents/*.md`
+- **Knowledge base** — add reference documents per agent
+- **Hooks and sensors** — quality gates and automatic validations
+- **Doctor command** — installation validation (#2)
+- **Install script** — automated distribution (#4)
+- **Documentation** — examples, guides, troubleshooting
 
-### Convenções
+### Conventions
 
-- Prompts de agente em **inglês** (melhor performance com LLMs)
-- Docs e comunicação em **português ou inglês**
-- JSONs seguem o [schema agent-v1](https://raw.githubusercontent.com/aws/amazon-q-developer-cli/refs/heads/main/schemas/agent-v1.json) do Kiro
-- Paths sempre **relativos** à raiz do projeto consumidor
-- Nunca commitar outputs de projeto (user stories, designs) — apenas o framework
+- **English** is the standard language for all artifacts (code, docs, prompts, commits, issues)
+- JSONs follow the Kiro [agent-v1 schema](https://raw.githubusercontent.com/aws/amazon-q-developer-cli/refs/heads/main/schemas/agent-v1.json)
+- Paths are always **relative** to the consumer project root
+- Each agent is self-contained: JSON + MD = everything it needs
+- Never commit project outputs (user stories, designs) — only the framework
 
 ### Backlog
 
-Veja a [Issue #3](https://github.com/luanbicesto/aidlc/issues/3) para o roadmap completo e ideias em aberto.
+See [Issue #3](https://github.com/luanbicesto/aidlc/issues/3) for the full roadmap and open ideas.
 
-## Inspiração
+## Inspiration
 
-Este projeto se inspira no [awslabs/aidlc-workflows](https://github.com/awslabs/aidlc-workflows) — a implementação completa do AI-DLC com 14 agentes e 32 estágios — mas com foco em simplicidade e distribuibilidade sem dependências de runtime.
+This project is inspired by [awslabs/aidlc-workflows](https://github.com/awslabs/aidlc-workflows) — the full AI-DLC implementation with 14 agents and 32 stages — but focused on simplicity and distributable without runtime dependencies.
 
-Para saber mais sobre a metodologia AI-DLC, leia o [blog post da AWS](https://aws.amazon.com/blogs/devops/ai-driven-development-life-cycle/).
+To learn more about the AI-DLC methodology, read the [AWS blog post](https://aws.amazon.com/blogs/devops/ai-driven-development-life-cycle/).
 
-## Licença
+## License
 
 MIT-0
