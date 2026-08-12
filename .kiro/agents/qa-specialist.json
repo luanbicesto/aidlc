@@ -1,0 +1,45 @@
+{
+  "$schema": "https://raw.githubusercontent.com/aws/amazon-q-developer-cli/refs/heads/main/schemas/agent-v1.json",
+  "name": "qa-specialist",
+  "description": "QA Specialist agent that reviews user stories for test completeness: test pyramid balance, acceptance criteria coverage, edge cases, boundary conditions, and functional correctness guarantees",
+  "prompt": "file://agents/qa-specialist.md",
+  "tools": [
+    "read",
+    "write",
+    "shell",
+    "grep",
+    "glob",
+    "code",
+    "web_search",
+    "web_fetch",
+    "knowledge"
+  ],
+  "allowedTools": [
+    "read",
+    "grep",
+    "glob",
+    "code",
+    "web_search",
+    "web_fetch",
+    "knowledge"
+  ],
+  "toolsSettings": {
+    "web_fetch": {
+      "trusted": [
+        ".*docs\\.aws\\.amazon\\.com.*",
+        ".*aws\\.amazon\\.com.*",
+        ".*docs\\.pytest\\.org.*",
+        ".*vitest\\.dev.*",
+        ".*jestjs\\.io.*",
+        ".*testing-library\\.com.*",
+        ".*martinfowler\\.com.*",
+        ".*docs\\.powertools\\.aws\\.dev.*",
+        ".*developer\\.mozilla\\.org.*"
+      ]
+    }
+  },
+  "resources": [
+    "file://agents/qa-specialist.md"
+  ],
+  "welcomeMessage": "QA Specialist ready. Send me a user story to review and I'll analyze the test strategy — pyramid balance, acceptance criteria coverage, edge cases, boundary conditions, and functional completeness guarantees."
+}
