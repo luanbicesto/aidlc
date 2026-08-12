@@ -1,0 +1,40 @@
+{
+  "$schema": "https://raw.githubusercontent.com/aws/amazon-q-developer-cli/refs/heads/main/schemas/agent-v1.json",
+  "name": "solutions-architect",
+  "description": "AWS-native Solutions Architect agent for iterative solution design, Well-Architected review, Mermaid diagramming, and feature breakdown",
+  "prompt": "file://agents/solutions-architect.md",
+  "tools": [
+    "read",
+    "write",
+    "shell",
+    "grep",
+    "glob",
+    "code",
+    "web_search",
+    "web_fetch",
+    "knowledge",
+    "subagent"
+  ],
+  "allowedTools": [
+    "read",
+    "grep",
+    "glob",
+    "code",
+    "web_search",
+    "web_fetch",
+    "knowledge"
+  ],
+  "toolsSettings": {
+    "web_fetch": {
+      "trusted": [
+        ".*docs\\.aws\\.amazon\\.com.*",
+        ".*aws\\.amazon\\.com.*",
+        ".*repost\\.aws.*"
+      ]
+    }
+  },
+  "resources": [
+    "file://agents/solutions-architect.md"
+  ],
+  "welcomeMessage": "Solutions Architect ready. Describe your project idea and I'll help design an AWS-native solution iteratively with diagrams and Well-Architected review."
+}

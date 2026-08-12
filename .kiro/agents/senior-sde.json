@@ -1,0 +1,49 @@
+{
+  "$schema": "https://raw.githubusercontent.com/aws/amazon-q-developer-cli/refs/heads/main/schemas/agent-v1.json",
+  "name": "senior-sde",
+  "description": "Senior Software Developer Engineer agent that autonomously implements user stories end-to-end: production code, tests, infrastructure, and Pull Requests ready for human review",
+  "prompt": "file://agents/senior-sde.md",
+  "tools": [
+    "read",
+    "write",
+    "shell",
+    "grep",
+    "glob",
+    "code",
+    "web_search",
+    "web_fetch",
+    "knowledge",
+    "use_aws"
+  ],
+  "allowedTools": [
+    "read",
+    "write",
+    "shell",
+    "grep",
+    "glob",
+    "code",
+    "web_search",
+    "web_fetch",
+    "knowledge",
+    "use_aws"
+  ],
+  "toolsSettings": {
+    "web_fetch": {
+      "trusted": [
+        ".*docs\\.aws\\.amazon\\.com.*",
+        ".*aws\\.amazon\\.com.*",
+        ".*repost\\.aws.*",
+        ".*developer\\.mozilla\\.org.*",
+        ".*typescriptlang\\.org.*",
+        ".*docs\\.pytest\\.org.*",
+        ".*docs\\.python\\.org.*",
+        ".*registry\\.terraform\\.io.*",
+        ".*docs\\.powertools\\.aws\\.dev.*"
+      ]
+    }
+  },
+  "resources": [
+    "file://agents/senior-sde.md"
+  ],
+  "welcomeMessage": "Senior SDE ready. Provide the user story path and I'll implement it end-to-end: infrastructure, code, tests, deployment, and PR."
+}
